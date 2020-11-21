@@ -1,10 +1,10 @@
 library(httr)
-github_api <- function(path) {
-  url <- modify_url("https://api.github.com", path = path)
-  GET(url)
-}
+library(jsonlite)
 
-resp <- github_api("/repos/martusza/pjatk_R")
-resp
-
+resp <- GET("https://cat-fact.herokuapp.com/facts/random?animal_type=cat&amount=5")
+catText<-content(resp, "text")
+View(catText)
+catJson<-fromJSON(catText, flatten=TRUE)
+catDF<-as.data.frame(catText)
+print(catDF)
 
