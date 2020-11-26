@@ -59,3 +59,32 @@ createDataFrame <- function(ile=1) {
 
 df <- createDataFrame(3)
 print(df)
+
+# Zadanie 5
+liczZplikow <- function(sciezka, nazwaKolumny, jakaFunkcja='mean', DlaIluPlikow=1){
+  files = list.files(sciezka)
+  for (i in 1:DlaIluPlikow) {
+    path = paste(sciezka,files[[i]], sep='/')
+    df<- read.csv(path, sep=',', header=T, check.names=FALSE, na.strings=c("","NA"))
+    col <- na.omit(df[[nazwaKolumny]])
+    if (i==1) {
+      x <- c(col)
+    } else {
+      x <- c(x, col)
+    }
+  }
+  if (jakaFunkcja=='mean') {
+    out <- mean(x)
+    } else if (jakaFunkcja=='median') {
+      out <- median(x)
+    } else if (jakaFunkcja=='max') {
+      out <- max(x)
+    } else if (jakaFunkcja=='min') {
+      out <- min(x)
+    } else {print('Aggregation function name not valid')
+      break
+      }
+  return (out)
+}
+x <- liczZplikow('smogKrakow', '140_pressure', 'mean', 8)
+print(x)
